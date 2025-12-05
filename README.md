@@ -1,30 +1,58 @@
-# 🗺️ ARC Raiders Maps Pro
+# 🗺️ ARC Raiders Maps - Interactive Tools
 
-Mapa interactivo con asistente IA para ARC Raiders.
+Herramientas interactivas para explorar mapas y encontrar items en ARC Raiders.
 
-## Características
+## 📱 Aplicaciones disponibles
 
-- 🗺️ **Mapas interactivos** - Dam, Spaceport, Buried City
-- 🔍 **Búsqueda de items** - 457+ items con ubicaciones
-- 🤖 **Chat IA** - Asistente inteligente para consultas
-- 🔨 **Sistema de Crafteo** - Recetas y materiales
-- ⚡ **Rutas de Farmeo** - Rutas optimizadas por recurso
-- ⭐ **Favoritos** - Guarda tus items favoritos
+### 1. `arc_maps_chat.py` - Chatbot de búsqueda ⭐ RECOMENDADO
+Búsqueda inteligente de items y ubicaciones **sin necesidad de API keys**.
 
-## Uso
+**Características:**
+- ✅ Búsqueda de items por nombre/tipo
+- ✅ Traducción ES → EN automática
+- ✅ Sugerencias de ubicaciones en mapas
+- ✅ Búsquedas rápidas predefinidas
+- ✅ **NO requiere configuración**
 
-Visita: [Tu URL de Streamlit Cloud]
+**Ejecutar:**
+```bash
+streamlit run arc_maps_chat.py
+```
 
-## Desarrollo local
+### 2. `arc_maps_pro.py` - Versión con ChatGPT
+Incluye asistente de IA conversacional (requiere API key de OpenAI).
+
+---
+
+## 🚀 Deploy a producción
+
+Para que otros usuarios accedan:
+
+1. **Streamlit Cloud** (recomendado):
+   - Ve a https://share.streamlit.io
+   - Conecta este repositorio: `PublicMeta/arc-raiders-maps`
+   - Selecciona `arc_maps_chat.py` como archivo principal
+   - Deploy automático ✅
+
+2. Ver instrucciones completas en `README_DEPLOY.md`
+
+---
+
+## 📦 Instalación local
 
 ```bash
+# Instalar dependencias
 pip install -r requirements.txt
-streamlit run arc_maps_pro.py
+
+# Ejecutar app (SIN IA)
+streamlit run arc_maps_chat.py
 ```
 
-## Variables de entorno
+---
 
-Configura en Streamlit Cloud Secrets:
-```
-OPENAI_API_KEY = "tu-api-key"
-```
+## 📁 Archivos importantes
+
+- `items_data.json` - Base de datos de 457+ items
+- `arc_maps_chat.py` - App principal (sin IA) ⭐
+- `arc_maps_pro.py` - App con ChatGPT
+- `.streamlit/config.toml` - Configuración de tema
