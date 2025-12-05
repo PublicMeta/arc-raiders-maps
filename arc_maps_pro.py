@@ -383,10 +383,11 @@ REGLAS:
 3. Da recomendaciones específicas de ubicaciones
 4. Si preguntan por crafteo, detalla los materiales
 5. Para farmeo, sugiere rutas eficientes
-6. Si no sabes algo, dilo honestamente"""
+6. Si no sabes algo, dilo honestamente
+7. Tienes acceso a información actualizada del juego hasta tu fecha de entrenamiento"""
 
 def chat_with_ai(user_message, history, current_map):
-    """Genera respuesta de IA"""
+    """Genera respuesta de IA conversacional"""
     if not client:
         return "❌ API key de OpenAI no configurada. Añade OPENAI_API_KEY al archivo .env"
     
@@ -409,7 +410,7 @@ def chat_with_ai(user_message, history, current_map):
         response = client.chat.completions.create(
             model="gpt-4o-mini",
             messages=messages,
-            max_tokens=500,
+            max_tokens=600,
             temperature=0.7
         )
         
