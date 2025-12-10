@@ -130,11 +130,19 @@ arc-raiders-maps/
 
 ## 🌐 Mapas incluidos
 
+Integración con **MapGenie** - mapas interactivos profesionales:
+
 - **Dam Battlegrounds** - 11 POIs
 - **The Spaceport** - 6 POIs  
 - **Buried City** - 7 POIs
 
-Iframe desde: `https://arcraidersmaps.app/`
+**Ventajas de MapGenie:**
+- ✅ Marcadores personalizados (con suscripción)
+- ✅ Filtros avanzados
+- ✅ Sincronización entre dispositivos
+- ✅ Actualización constante de la comunidad
+
+URLs: `https://mapgenie.io/arc-raiders/maps/`
 
 ---
 

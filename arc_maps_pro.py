@@ -111,6 +111,13 @@ MAPS = {
     },
 }
 
+# URLs de MapGenie
+MAP_URLS = {
+    "dam": "https://mapgenie.io/arc-raiders/maps/dam-battlegrounds",
+    "spaceport": "https://mapgenie.io/arc-raiders/maps/the-spaceport",
+    "buried-city": "https://mapgenie.io/arc-raiders/maps/buried-city"
+}
+
 # Sistema de Crafteo - Recetas conocidas
 RECIPES = {
     "bandage": {
@@ -883,7 +890,7 @@ components.html(
         </style>
     </head>
     <body>
-        <iframe src="https://arcraidersmaps.app/{map_id}" 
+        <iframe src="{MAP_URLS.get(map_id, MAP_URLS['dam'])}" 
                 allow="fullscreen"
                 loading="eager"></iframe>
     </body>

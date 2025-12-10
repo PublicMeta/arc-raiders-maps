@@ -303,12 +303,19 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
+# Mapas de MapGenie
+MAP_URLS = {
+    "dam": "https://mapgenie.io/arc-raiders/maps/dam-battlegrounds",
+    "spaceport": "https://mapgenie.io/arc-raiders/maps/the-spaceport",
+    "buried-city": "https://mapgenie.io/arc-raiders/maps/buried-city"
+}
+
 # Iframe que ocupa toda la pantalla disponible
 components.html(
     f'''<!DOCTYPE html>
     <html style="margin:0;padding:0;height:100%;overflow:hidden;">
     <body style="margin:0;padding:0;height:100%;overflow:hidden;background:#0d1117;">
-        <iframe src="https://arcraidersmaps.app/{map_id}" 
+        <iframe src="{MAP_URLS.get(map_id, MAP_URLS['dam'])}" 
                 style="width:100%;height:100vh;border:none;display:block;"></iframe>
     </body>
     </html>''',
