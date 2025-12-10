@@ -626,17 +626,17 @@ with st.sidebar:
                 else:
                     st.warning("No encontrado. Prueba: battery, electrical, medical")
         
-        # MapGenie Login
+        # Abrir mapa
         st.markdown("---")
-        st.markdown("**🗺️ MapGenie:**")
+        st.markdown("**🗺️ Mapa:**")
         map_url = MAP_URLS.get(st.session_state.current_map, MAP_URLS['dam'])
         st.markdown(
             f'<a href="{map_url}" target="_blank" style="text-decoration:none;">' +
-            '<button style="width:100%;padding:8px;background:#238636;color:#fff;border:none;border-radius:5px;cursor:pointer;font-size:13px;">' +
-            '🔐 Abrir en Nueva Pestaña</button></a>',
+            '<button style="width:100%;padding:12px;background:#238636;color:#fff;border:none;border-radius:5px;cursor:pointer;font-size:14px;font-weight:bold;">' +
+            '🚀 Abrir MapGenie</button></a>',
             unsafe_allow_html=True
         )
-        st.caption("💡 Inicia sesión allí para marcadores")
+        st.caption("✅ Nueva pestaña • Inicia sesión allí")
         
         # Búsqueda rápida
         st.markdown("---")
@@ -857,57 +857,88 @@ with st.sidebar:
 
 map_id = st.session_state.current_map
 
-# CSS para el área del mapa - ocupa todo el espacio restante
-st.markdown("""
-<style>
-    /* Área principal sin espacios */
-    section[data-testid="stMain"] { 
-        padding: 0 !important; 
-        margin: 0 !important;
-        overflow: hidden !important;
-    }
-    div[data-testid="stAppViewBlockContainer"] {
-        padding: 0 !important;
-        margin: 0 !important;
-    }
-    div[data-testid="stVerticalBlock"] {
-        gap: 0 !important;
-        padding: 0 !important;
-    }
-    .element-container { 
-        margin: 0 !important; 
-        padding: 0 !important; 
-    }
-</style>
-""", unsafe_allow_html=True)
+# ═══════════════════════════════════════════════════════════════════════
+# ÁREA PRINCIPAL - INFORMACIÓN DEL MAPA
+# ═══════════════════════════════════════════════════════════════════════
 
-# Iframe del mapa - altura calculada para llenar la pantalla
-components.html(
-    f'''<!DOCTYPE html>
-    <html style="margin:0;padding:0;width:100%;height:100%;">
-    <head>
-        <style>
-            * {{ margin: 0; padding: 0; box-sizing: border-box; }}
-            html, body {{ 
-                width: 100%; 
-                height: 100%; 
-                overflow: hidden; 
-                background: #0d1117;
-            }}
-            iframe {{
-                width: 100%;
-                height: 100vh;
+map_name = MAPS[map_id]["name"]
+map_url = MAP_URLS[map_id]
+
+st.markdown(f"""
+<div style="padding: 2rem; max-width: 900px; margin: 0 auto;">
+    <div style="text-align: center; margin-bottom: 2rem;">
+        <h1 style="font-size: 2.5rem; margin-bottom: 0.5rem;">🗺️ {map_name}</h1>
+        <p style="font-size: 1.1rem; color: #8b949e;">Mapa interactivo con IA y marcadores personalizados</p>
+    </div>
+    
+    <div style="background: #161b22; padding: 2rem; border-radius: 10px; border: 1px solid #30363d; margin-bottom: 2rem;">
+        <h2 style="font-size: 1.5rem; margin-bottom: 1rem;">🤖 Características PRO</h2>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; font-size: 1rem; color: #c9d1d9;">
+            <div>
+                <strong>MapGenie:</strong>
+                <ul style="margin-top: 0.5rem; line-height: 1.8;">
+                    <li>✅ Marcadores personalizados</li>
+                    <li>✅ Filtros avanzados</li>
+                    <li>✅ Sincronización entre dispositivos</li>
+                </ul>
+            </div>
+            <div>
+                <strong>Asistente IA:</strong>
+                <ul style="margin-top: 0.5rem; line-height: 1.8;">
+                    <li>🤖 Chat conversacional</li>
+                    <li>🔍 Búsqueda inteligente</li>
+                    <li>🔨 Sistema de crafteo</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <div style="background: #21262d; padding: 1.5rem; border-radius: 10px; border-left: 4px solid #238636; margin-bottom: 2rem;">
+        <h3 style="font-size: 1.2rem; margin-bottom: 0.5rem;">💡 Cómo usar</h3>
+        <ol style="font-size: 1rem; line-height: 1.8; color: #c9d1d9;">
+            <li>Usa las pestañas del menú lateral: <strong>Búsqueda</strong>, <strong>Chat IA</strong>, <strong>Crafteo</strong>, <strong>Rutas</strong></li>
+            <li>Click en <strong>"Abrir {map_name}"</strong> para ver el mapa interactivo</li>
+            <li>Pregunta al asistente IA sobre ubicaciones, items o estrategias</li>
+            <li>Consulta recetas de crafteo y rutas optimizadas de farmeo</li>
+        </ol>
+    </div>
+    
+    <div style="text-align: center;">
+        <a href="{map_url}" target="_blank" style="text-decoration: none;">
+            <button style="
+                background: linear-gradient(135deg, #238636 0%, #2ea043 100%);
+                color: white;
+                font-size: 1.2rem;
+                font-weight: bold;
+                padding: 1rem 3rem;
                 border: none;
-                display: block;
-            }}
-        </style>
-    </head>
-    <body>
-        <iframe src="{MAP_URLS.get(map_id, MAP_URLS['dam'])}" 
-                allow="fullscreen"
-                loading="eager"></iframe>
-    </body>
-    </html>''',
-    height=900,
-    scrolling=False
-)
+                border-radius: 8px;
+                cursor: pointer;
+                box-shadow: 0 4px 12px rgba(35, 134, 54, 0.3);
+                transition: transform 0.2s;
+            " onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+                🚀 Abrir Mapa Interactivo
+            </button>
+        </a>
+        <p style="margin-top: 1rem; color: #8b949e; font-size: 0.9rem;">Se abre en nueva pestaña • Inicia sesión en MapGenie</p>
+    </div>
+    
+    <div style="margin-top: 3rem; padding: 2rem; background: #161b22; border-radius: 10px; border: 1px solid #30363d;">
+        <h3 style="font-size: 1.2rem; margin-bottom: 1rem;">📊 Estadísticas</h3>
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; text-align: center;">
+            <div>
+                <p style="font-size: 2rem; font-weight: bold; color: #238636;">{len(GAME_ITEMS)}</p>
+                <p style="color: #8b949e;">Items</p>
+            </div>
+            <div>
+                <p style="font-size: 2rem; font-weight: bold; color: #238636;">{len(MAPS)}</p>
+                <p style="color: #8b949e;">Mapas</p>
+            </div>
+            <div>
+                <p style="font-size: 2rem; font-weight: bold; color: #238636;">{len(RECIPES)}</p>
+                <p style="color: #8b949e;">Recetas</p>
+            </div>
+        </div>
+    </div>
+</div>
+""", unsafe_allow_html=True)

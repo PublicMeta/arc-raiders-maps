@@ -274,15 +274,17 @@ with st.sidebar:
         st.markdown(locs_html, unsafe_allow_html=True)
     
     st.markdown("---")
-    st.markdown("### 🔐 MapGenie Login")
+    st.markdown("### 🗺️ Abrir Mapa")
     map_url = MAP_URLS.get(st.session_state.current_map, MAP_URLS['dam'])
+    
     st.markdown(
         f'<a href="{map_url}" target="_blank" style="text-decoration:none;">' +
-        '<button style="width:100%;padding:8px;background:#238636;color:#fff;border:none;border-radius:5px;cursor:pointer;font-size:14px;">' +
-        '🗺️ Abrir en Nueva Pestaña</button></a>',
+        '<button style="width:100%;padding:12px;background:#238636;color:#fff;border:none;border-radius:5px;cursor:pointer;font-size:15px;font-weight:bold;">' +
+        f'🗺️ Abrir {MAPS[st.session_state.current_map]["name"]}</button></a>',
         unsafe_allow_html=True
     )
-    st.caption("💡 Inicia sesión allí, luego vuelve aquí")
+    st.caption("✅ Se abre en nueva pestaña con tu sesión")
+    st.caption("💡 Inicia sesión una vez y tus marcadores se guardan")
     
     st.markdown("---")
     st.markdown("### ⚡ Búsqueda Rápida")
@@ -305,31 +307,66 @@ with st.sidebar:
                 st.rerun()
 
 # ═══════════════════════════════════════════════════════════════════════════════
-# MAPA PRINCIPAL - PANTALLA COMPLETA
+# ÁREA PRINCIPAL - INSTRUCCIONES Y PREVIEW
 # ═══════════════════════════════════════════════════════════════════════════════
 
 map_id = st.session_state.current_map
+map_name = MAPS[map_id]["name"]
+map_url = MAP_URLS[map_id]
 
-# CSS adicional para eliminar espacio extra
-st.markdown("""
-<style>
-    .main .block-container { padding: 0 !important; margin: 0 !important; }
-    .stHtml { margin: 0 !important; padding: 0 !important; }
-    iframe { margin: 0 !important; }
-    section[data-testid="stMain"] { padding: 0 !important; }
-    .element-container { margin: 0 !important; padding: 0 !important; }
-</style>
+st.markdown(f"""
+<div style="padding: 2rem; max-width: 900px; margin: 0 auto;">
+    <div style="text-align: center; margin-bottom: 2rem;">
+        <h1 style="font-size: 2.5rem; margin-bottom: 0.5rem;">🗺️ {map_name}</h1>
+        <p style="font-size: 1.1rem; color: #8b949e;">Mapa interactivo con marcadores personalizados</p>
+    </div>
+    
+    <div style="background: #161b22; padding: 2rem; border-radius: 10px; border: 1px solid #30363d; margin-bottom: 2rem;">
+        <h2 style="font-size: 1.5rem; margin-bottom: 1rem;">✨ Características de MapGenie</h2>
+        <ul style="font-size: 1rem; line-height: 1.8; color: #c9d1d9;">
+            <li>✅ <strong>Marcadores personalizados</strong> - Marca ubicaciones importantes</li>
+            <li>✅ <strong>Filtros avanzados</strong> - Encuentra items específicos rápidamente</li>
+            <li>✅ <strong>Sincronización</strong> - Accede desde cualquier dispositivo</li>
+            <li>✅ <strong>Progreso trackeable</strong> - Marca zonas exploradas</li>
+            <li>✅ <strong>Notas privadas</strong> - Añade recordatorios a cada marcador</li>
+        </ul>
+    </div>
+    
+    <div style="background: #21262d; padding: 1.5rem; border-radius: 10px; border-left: 4px solid #238636; margin-bottom: 2rem;">
+        <h3 style="font-size: 1.2rem; margin-bottom: 0.5rem;">💡 Cómo usar</h3>
+        <ol style="font-size: 1rem; line-height: 1.8; color: #c9d1d9;">
+            <li>Click en <strong>"Abrir {map_name}"</strong> en el menú lateral</li>
+            <li>Inicia sesión en MapGenie (solo la primera vez)</li>
+            <li>Explora el mapa y crea tus marcadores</li>
+            <li>Usa la búsqueda del menú para encontrar items específicos</li>
+        </ol>
+    </div>
+    
+    <div style="text-align: center;">
+        <a href="{map_url}" target="_blank" style="text-decoration: none;">
+            <button style="
+                background: linear-gradient(135deg, #238636 0%, #2ea043 100%);
+                color: white;
+                font-size: 1.2rem;
+                font-weight: bold;
+                padding: 1rem 3rem;
+                border: none;
+                border-radius: 8px;
+                cursor: pointer;
+                box-shadow: 0 4px 12px rgba(35, 134, 54, 0.3);
+                transition: transform 0.2s;
+            " onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+                🚀 Abrir Mapa Interactivo
+            </button>
+        </a>
+        <p style="margin-top: 1rem; color: #8b949e; font-size: 0.9rem;">Se abre en nueva pestaña • Sesión persistente</p>
+    </div>
+    
+    <div style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid #30363d; text-align: center;">
+        <p style="color: #8b949e; font-size: 0.9rem;">
+            📊 Base de datos: {len(GAME_ITEMS)} items • 🗺️ {len(MAPS)} mapas disponibles
+        </p>
+    </div>
+</div>
 """, unsafe_allow_html=True)
 
-# Iframe que ocupa toda la pantalla disponible
-components.html(
-    f'''<!DOCTYPE html>
-    <html style="margin:0;padding:0;height:100%;overflow:hidden;">
-    <body style="margin:0;padding:0;height:100%;overflow:hidden;background:#0d1117;">
-        <iframe src="{MAP_URLS.get(map_id, MAP_URLS['dam'])}" 
-                style="width:100%;height:100vh;border:none;display:block;"></iframe>
-    </body>
-    </html>''',
-    height=950,
-    scrolling=False
-)
