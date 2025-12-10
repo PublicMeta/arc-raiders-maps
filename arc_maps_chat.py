@@ -220,6 +220,13 @@ if "last_result" not in st.session_state:
 if "last_locs" not in st.session_state:
     st.session_state.last_locs = []
 
+# Mapas de MapGenie
+MAP_URLS = {
+    "dam": "https://mapgenie.io/arc-raiders/maps/dam-battlegrounds",
+    "spaceport": "https://mapgenie.io/arc-raiders/maps/the-spaceport",
+    "buried-city": "https://mapgenie.io/arc-raiders/maps/buried-city"
+}
+
 # ═══════════════════════════════════════════════════════════════════════════════
 # SIDEBAR
 # ═══════════════════════════════════════════════════════════════════════════════
@@ -267,6 +274,17 @@ with st.sidebar:
         st.markdown(locs_html, unsafe_allow_html=True)
     
     st.markdown("---")
+    st.markdown("### 🔐 MapGenie Login")
+    map_url = MAP_URLS.get(st.session_state.current_map, MAP_URLS['dam'])
+    st.markdown(
+        f'<a href="{map_url}" target="_blank" style="text-decoration:none;">' +
+        '<button style="width:100%;padding:8px;background:#238636;color:#fff;border:none;border-radius:5px;cursor:pointer;font-size:14px;">' +
+        '🗺️ Abrir en Nueva Pestaña</button></a>',
+        unsafe_allow_html=True
+    )
+    st.caption("💡 Inicia sesión allí, luego vuelve aquí")
+    
+    st.markdown("---")
     st.markdown("### ⚡ Búsqueda Rápida")
     
     quick = [
@@ -302,13 +320,6 @@ st.markdown("""
     .element-container { margin: 0 !important; padding: 0 !important; }
 </style>
 """, unsafe_allow_html=True)
-
-# Mapas de MapGenie
-MAP_URLS = {
-    "dam": "https://mapgenie.io/arc-raiders/maps/dam-battlegrounds",
-    "spaceport": "https://mapgenie.io/arc-raiders/maps/the-spaceport",
-    "buried-city": "https://mapgenie.io/arc-raiders/maps/buried-city"
-}
 
 # Iframe que ocupa toda la pantalla disponible
 components.html(

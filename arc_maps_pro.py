@@ -626,7 +626,20 @@ with st.sidebar:
                 else:
                     st.warning("No encontrado. Prueba: battery, electrical, medical")
         
+        # MapGenie Login
+        st.markdown("---")
+        st.markdown("**🗺️ MapGenie:**")
+        map_url = MAP_URLS.get(st.session_state.current_map, MAP_URLS['dam'])
+        st.markdown(
+            f'<a href="{map_url}" target="_blank" style="text-decoration:none;">' +
+            '<button style="width:100%;padding:8px;background:#238636;color:#fff;border:none;border-radius:5px;cursor:pointer;font-size:13px;">' +
+            '🔐 Abrir en Nueva Pestaña</button></a>',
+            unsafe_allow_html=True
+        )
+        st.caption("💡 Inicia sesión allí para marcadores")
+        
         # Búsqueda rápida
+        st.markdown("---")
         st.markdown("**⚡ Rápido:**")
         quick_cols = st.columns(3)
         quick = [("🔋", "battery"), ("⚡", "electrical"), ("🔧", "mechanical"), 
