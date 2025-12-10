@@ -632,11 +632,13 @@ with st.sidebar:
         map_url = MAP_URLS.get(st.session_state.current_map, MAP_URLS['dam'])
         st.markdown(
             f'<a href="{map_url}" target="_blank" style="text-decoration:none;">' +
-            '<button style="width:100%;padding:12px;background:#238636;color:#fff;border:none;border-radius:5px;cursor:pointer;font-size:14px;font-weight:bold;">' +
-            '🚀 Abrir MapGenie</button></a>',
+            '<div style="background:linear-gradient(135deg,#238636,#2ea043);padding:14px;border-radius:8px;text-align:center;box-shadow:0 4px 12px rgba(35,134,54,0.4);">' +
+            f'<div style="color:#fff;font-size:15px;font-weight:bold;">🗺️ {MAPS[st.session_state.current_map]["name"]}</div>' +
+            '<div style="color:#d1fae5;font-size:12px;margin-top:4px;">Click para abrir →</div>' +
+            '</div></a>',
             unsafe_allow_html=True
         )
-        st.caption("✅ Nueva pestaña • Inicia sesión allí")
+        st.info("🔐 **Primera vez:** Inicia sesión arriba-derecha en MapGenie")
         
         # Búsqueda rápida
         st.markdown("---")
@@ -893,13 +895,29 @@ st.markdown(f"""
         </div>
     </div>
     
-    <div style="background: #21262d; padding: 1.5rem; border-radius: 10px; border-left: 4px solid #238636; margin-bottom: 2rem;">
+    <div style="background: #21262d; padding: 1.5rem; border-radius: 10px; border-left: 4px solid #f97316; margin-bottom: 2rem;">
+        <h3 style="font-size: 1.2rem; margin-bottom: 0.5rem;">🔐 Importante: Iniciar Sesión en MapGenie</h3>
+        <div style="font-size: 1rem; line-height: 1.8; color: #c9d1d9;">
+            <p style="margin-bottom: 1rem;"><strong>Para usar marcadores personalizados:</strong></p>
+            <ol style="margin-left: 1.2rem;">
+                <li>Click en el botón verde <strong>"🗺️ [Nombre del mapa]"</strong> en el menú lateral</li>
+                <li>En MapGenie, busca <strong>"Sign In"</strong> arriba a la derecha</li>
+                <li>Inicia sesión o crea cuenta gratuita</li>
+                <li>¡Crea y sincroniza tus marcadores!</li>
+            </ol>
+            <p style="margin-top: 1rem; padding: 0.8rem; background: rgba(34, 197, 94, 0.1); border-radius: 6px; border-left: 3px solid #22c55e;">
+                ✅ Tu sesión se guarda automáticamente. Solo necesitas hacerlo una vez.
+            </p>
+        </div>
+    </div>
+    
+    <div style="background: #161b22; padding: 1.5rem; border-radius: 10px; border: 1px solid #30363d; margin-bottom: 2rem;">
         <h3 style="font-size: 1.2rem; margin-bottom: 0.5rem;">💡 Cómo usar</h3>
         <ol style="font-size: 1rem; line-height: 1.8; color: #c9d1d9;">
             <li>Usa las pestañas del menú lateral: <strong>Búsqueda</strong>, <strong>Chat IA</strong>, <strong>Crafteo</strong>, <strong>Rutas</strong></li>
-            <li>Click en <strong>"Abrir {map_name}"</strong> para ver el mapa interactivo</li>
             <li>Pregunta al asistente IA sobre ubicaciones, items o estrategias</li>
             <li>Consulta recetas de crafteo y rutas optimizadas de farmeo</li>
+            <li>Abre MapGenie para explorar el mapa con marcadores</li>
         </ol>
     </div>
     
