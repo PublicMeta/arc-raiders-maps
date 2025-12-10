@@ -311,83 +311,46 @@ with st.sidebar:
                 st.rerun()
 
 # ═══════════════════════════════════════════════════════════════════════════════
-# ÁREA PRINCIPAL - INSTRUCCIONES Y PREVIEW
+# MAPA PRINCIPAL - IFRAME DE MAPGENIE
 # ═══════════════════════════════════════════════════════════════════════════════
 
 map_id = st.session_state.current_map
 map_name = MAPS[map_id]["name"]
 map_url = MAP_URLS[map_id]
 
+# CSS para maximizar el espacio del mapa
+st.markdown("""
+<style>
+    .main .block-container { padding: 0 !important; margin: 0 !important; }
+    section[data-testid="stMain"] { padding: 0 !important; }
+    .element-container { margin: 0 !important; padding: 0 !important; }
+</style>
+""", unsafe_allow_html=True)
+
+# Mensaje informativo sobre login
 st.markdown(f"""
-<div style="padding: 2rem; max-width: 900px; margin: 0 auto;">
-    <div style="text-align: center; margin-bottom: 2rem;">
-        <h1 style="font-size: 2.5rem; margin-bottom: 0.5rem;">🗺️ {map_name}</h1>
-        <p style="font-size: 1.1rem; color: #8b949e;">Mapa interactivo con marcadores personalizados</p>
-    </div>
-    
-    <div style="background: #161b22; padding: 2rem; border-radius: 10px; border: 1px solid #30363d; margin-bottom: 2rem;">
-        <h2 style="font-size: 1.5rem; margin-bottom: 1rem;">✨ Características de MapGenie</h2>
-        <ul style="font-size: 1rem; line-height: 1.8; color: #c9d1d9;">
-            <li>✅ <strong>Marcadores personalizados</strong> - Marca ubicaciones importantes</li>
-            <li>✅ <strong>Filtros avanzados</strong> - Encuentra items específicos rápidamente</li>
-            <li>✅ <strong>Sincronización</strong> - Accede desde cualquier dispositivo</li>
-            <li>✅ <strong>Progreso trackeable</strong> - Marca zonas exploradas</li>
-            <li>✅ <strong>Notas privadas</strong> - Añade recordatorios a cada marcador</li>
-        </ul>
-    </div>
-    
-    <div style="background: #21262d; padding: 1.5rem; border-radius: 10px; border-left: 4px solid #f97316; margin-bottom: 2rem;">
-        <h3 style="font-size: 1.2rem; margin-bottom: 0.5rem;">🔐 Importante: Iniciar Sesión</h3>
-        <div style="font-size: 1rem; line-height: 1.8; color: #c9d1d9;">
-            <p style="margin-bottom: 1rem;"><strong>Primera vez que usas la app:</strong></p>
-            <ol style="margin-left: 1.2rem;">
-                <li>Click en el botón verde <strong>"🗺️ [Nombre del mapa]"</strong> en el menú lateral izquierdo</li>
-                <li>MapGenie se abrirá en una nueva pestaña</li>
-                <li>En la esquina superior derecha de MapGenie, click en <strong>"Sign In"</strong></li>
-                <li>Inicia sesión o crea cuenta gratis</li>
-                <li>¡Listo! Ahora puedes crear marcadores personalizados</li>
-            </ol>
-            <p style="margin-top: 1rem; padding: 0.8rem; background: rgba(34, 197, 94, 0.1); border-radius: 6px; border-left: 3px solid #22c55e;">
-                ✅ Tu sesión se guardará automáticamente. No necesitarás volver a iniciar sesión.
-            </p>
-        </div>
-    </div>
-    
-    <div style="background: #161b22; padding: 1.5rem; border-radius: 10px; border: 1px solid #30363d; margin-bottom: 2rem;">
-        <h3 style="font-size: 1.2rem; margin-bottom: 0.5rem;">💡 Cómo usar después de login</h3>
-        <ol style="font-size: 1rem; line-height: 1.8; color: #c9d1d9;">
-            <li>Explora el mapa y crea tus marcadores personalizados</li>
-            <li>Usa los filtros de MapGenie para encontrar tipos específicos de ubicaciones</li>
-            <li>Usa la búsqueda del menú lateral para encontrar items en la base de datos</li>
-            <li>Alterna entre MapGenie y esta app según necesites</li>
-        </ol>
-    </div>
-    
-    <div style="text-align: center;">
-        <a href="{map_url}" target="_blank" style="text-decoration: none;">
-            <button style="
-                background: linear-gradient(135deg, #238636 0%, #2ea043 100%);
-                color: white;
-                font-size: 1.2rem;
-                font-weight: bold;
-                padding: 1rem 3rem;
-                border: none;
-                border-radius: 8px;
-                cursor: pointer;
-                box-shadow: 0 4px 12px rgba(35, 134, 54, 0.3);
-                transition: transform 0.2s;
-            " onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
-                🚀 Abrir Mapa Interactivo
-            </button>
-        </a>
-        <p style="margin-top: 1rem; color: #8b949e; font-size: 0.9rem;">Se abre en nueva pestaña • Sesión persistente</p>
-    </div>
-    
-    <div style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid #30363d; text-align: center;">
-        <p style="color: #8b949e; font-size: 0.9rem;">
-            📊 Base de datos: {len(GAME_ITEMS)} items • 🗺️ {len(MAPS)} mapas disponibles
-        </p>
-    </div>
+<div style="padding: 1rem; background: #161b22; border-left: 4px solid #f97316; margin-bottom: 0.5rem;">
+    <strong>🔐 Para iniciar sesión en MapGenie:</strong> Una vez cargado el mapa, busca el botón <strong>"Sign In"</strong> 
+    en la esquina superior derecha del mapa. Tu sesión se guardará automáticamente.
 </div>
 """, unsafe_allow_html=True)
+
+# Iframe del mapa
+components.html(
+    f'''<!DOCTYPE html>
+    <html style="margin:0;padding:0;height:100%;overflow:hidden;">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body style="margin:0;padding:0;height:100%;overflow:hidden;background:#0d1117;">
+        <iframe src="{map_url}" 
+                style="width:100%;height:100vh;border:none;display:block;"
+                allow="fullscreen"
+                loading="eager"></iframe>
+    </body>
+    </html>''',
+    height=850,
+    scrolling=False
+)
 

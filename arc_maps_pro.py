@@ -860,103 +860,48 @@ with st.sidebar:
 map_id = st.session_state.current_map
 
 # ═══════════════════════════════════════════════════════════════════════
-# ÁREA PRINCIPAL - INFORMACIÓN DEL MAPA
+# ÁREA PRINCIPAL - MAPA INTERACTIVO
 # ═══════════════════════════════════════════════════════════════════════
 
 map_name = MAPS[map_id]["name"]
 map_url = MAP_URLS[map_id]
 
+# CSS para maximizar espacio del mapa
+st.markdown("""
+<style>
+    section[data-testid="stMain"] { padding: 0 !important; margin: 0 !important; }
+    .block-container { padding: 0 !important; margin: 0 !important; max-width: 100% !important; }
+    .element-container { margin: 0 !important; padding: 0 !important; }
+</style>
+""", unsafe_allow_html=True)
+
+# Mensaje sobre login
 st.markdown(f"""
-<div style="padding: 2rem; max-width: 900px; margin: 0 auto;">
-    <div style="text-align: center; margin-bottom: 2rem;">
-        <h1 style="font-size: 2.5rem; margin-bottom: 0.5rem;">🗺️ {map_name}</h1>
-        <p style="font-size: 1.1rem; color: #8b949e;">Mapa interactivo con IA y marcadores personalizados</p>
-    </div>
-    
-    <div style="background: #161b22; padding: 2rem; border-radius: 10px; border: 1px solid #30363d; margin-bottom: 2rem;">
-        <h2 style="font-size: 1.5rem; margin-bottom: 1rem;">🤖 Características PRO</h2>
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; font-size: 1rem; color: #c9d1d9;">
-            <div>
-                <strong>MapGenie:</strong>
-                <ul style="margin-top: 0.5rem; line-height: 1.8;">
-                    <li>✅ Marcadores personalizados</li>
-                    <li>✅ Filtros avanzados</li>
-                    <li>✅ Sincronización entre dispositivos</li>
-                </ul>
-            </div>
-            <div>
-                <strong>Asistente IA:</strong>
-                <ul style="margin-top: 0.5rem; line-height: 1.8;">
-                    <li>🤖 Chat conversacional</li>
-                    <li>🔍 Búsqueda inteligente</li>
-                    <li>🔨 Sistema de crafteo</li>
-                </ul>
-            </div>
-        </div>
-    </div>
-    
-    <div style="background: #21262d; padding: 1.5rem; border-radius: 10px; border-left: 4px solid #f97316; margin-bottom: 2rem;">
-        <h3 style="font-size: 1.2rem; margin-bottom: 0.5rem;">🔐 Importante: Iniciar Sesión en MapGenie</h3>
-        <div style="font-size: 1rem; line-height: 1.8; color: #c9d1d9;">
-            <p style="margin-bottom: 1rem;"><strong>Para usar marcadores personalizados:</strong></p>
-            <ol style="margin-left: 1.2rem;">
-                <li>Click en el botón verde <strong>"🗺️ [Nombre del mapa]"</strong> en el menú lateral</li>
-                <li>En MapGenie, busca <strong>"Sign In"</strong> arriba a la derecha</li>
-                <li>Inicia sesión o crea cuenta gratuita</li>
-                <li>¡Crea y sincroniza tus marcadores!</li>
-            </ol>
-            <p style="margin-top: 1rem; padding: 0.8rem; background: rgba(34, 197, 94, 0.1); border-radius: 6px; border-left: 3px solid #22c55e;">
-                ✅ Tu sesión se guarda automáticamente. Solo necesitas hacerlo una vez.
-            </p>
-        </div>
-    </div>
-    
-    <div style="background: #161b22; padding: 1.5rem; border-radius: 10px; border: 1px solid #30363d; margin-bottom: 2rem;">
-        <h3 style="font-size: 1.2rem; margin-bottom: 0.5rem;">💡 Cómo usar</h3>
-        <ol style="font-size: 1rem; line-height: 1.8; color: #c9d1d9;">
-            <li>Usa las pestañas del menú lateral: <strong>Búsqueda</strong>, <strong>Chat IA</strong>, <strong>Crafteo</strong>, <strong>Rutas</strong></li>
-            <li>Pregunta al asistente IA sobre ubicaciones, items o estrategias</li>
-            <li>Consulta recetas de crafteo y rutas optimizadas de farmeo</li>
-            <li>Abre MapGenie para explorar el mapa con marcadores</li>
-        </ol>
-    </div>
-    
-    <div style="text-align: center;">
-        <a href="{map_url}" target="_blank" style="text-decoration: none;">
-            <button style="
-                background: linear-gradient(135deg, #238636 0%, #2ea043 100%);
-                color: white;
-                font-size: 1.2rem;
-                font-weight: bold;
-                padding: 1rem 3rem;
-                border: none;
-                border-radius: 8px;
-                cursor: pointer;
-                box-shadow: 0 4px 12px rgba(35, 134, 54, 0.3);
-                transition: transform 0.2s;
-            " onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
-                🚀 Abrir Mapa Interactivo
-            </button>
-        </a>
-        <p style="margin-top: 1rem; color: #8b949e; font-size: 0.9rem;">Se abre en nueva pestaña • Inicia sesión en MapGenie</p>
-    </div>
-    
-    <div style="margin-top: 3rem; padding: 2rem; background: #161b22; border-radius: 10px; border: 1px solid #30363d;">
-        <h3 style="font-size: 1.2rem; margin-bottom: 1rem;">📊 Estadísticas</h3>
-        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; text-align: center;">
-            <div>
-                <p style="font-size: 2rem; font-weight: bold; color: #238636;">{len(GAME_ITEMS)}</p>
-                <p style="color: #8b949e;">Items</p>
-            </div>
-            <div>
-                <p style="font-size: 2rem; font-weight: bold; color: #238636;">{len(MAPS)}</p>
-                <p style="color: #8b949e;">Mapas</p>
-            </div>
-            <div>
-                <p style="font-size: 2rem; font-weight: bold; color: #238636;">{len(RECIPES)}</p>
-                <p style="color: #8b949e;">Recetas</p>
-            </div>
-        </div>
-    </div>
+<div style="padding: 1rem; background: #161b22; border-left: 4px solid #f97316; margin-bottom: 0.5rem;">
+    <strong>🔐 Login MapGenie:</strong> Busca <strong>"Sign In"</strong> en la esquina superior derecha del mapa abajo. 
+    Tu sesión se guarda automáticamente.
 </div>
 """, unsafe_allow_html=True)
+
+# Iframe del mapa
+components.html(
+    f'''<!DOCTYPE html>
+    <html style="margin:0;padding:0;height:100%;">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            * {{ margin: 0; padding: 0; box-sizing: border-box; }}
+            html, body {{ width: 100%; height: 100%; overflow: hidden; background: #0d1117; }}
+            iframe {{ width: 100%; height: 100vh; border: none; display: block; }}
+        </style>
+    </head>
+    <body>
+        <iframe src="{map_url}" 
+                allow="fullscreen"
+                loading="eager"></iframe>
+    </body>
+    </html>''',
+    height=850,
+    scrolling=False
+)
